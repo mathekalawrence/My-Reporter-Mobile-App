@@ -22,7 +22,13 @@ export default function SignupScreen({ navigation }) {
     if (name && email && password && confirmPassword) {
       if (password === confirmPassword) {
         alert('Account created successfully!');
-        navigation.navigate('Login');
+       // navigation.navigate('Login');
+       //Navigating to the Report Screen after signup
+       navigation.reset({
+        index: 0,
+        routes: [{ name: 'Report'}],
+       });
+
       } else {
         alert('Passwords do not match');
       }

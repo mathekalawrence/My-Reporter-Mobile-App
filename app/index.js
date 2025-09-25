@@ -1,6 +1,7 @@
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
+import ReportScreen from '../screens/ReportScreen.js';
 import SignupScreen from '../screens/SignupScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 
@@ -36,6 +37,15 @@ export default function App() {
           name="Signup" 
           component={SignupScreen}
           options={{ title: 'Create Account' }}
+        />
+         <Stack.Screen 
+          name="Report" 
+          component={ReportScreen}
+          options={{ 
+            title: 'Road Report',
+            headerLeft: null, // Remove back button on Report screen
+            gestureEnabled: false // Disable swipe back
+          }}
         />
       </Stack.Navigator>
     

@@ -18,8 +18,14 @@ export default function LoginScreen({ navigation }) {
   const handleLogin = () => {
     // Simple validation
     if (email && password) {
-      alert('Login successful!');
+      //alert('Login successful!');
       // Here, it's just typical navigation to the main app
+      //successful navigation should lead to the Report Page
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Report'}],
+      });
+
     } else {
       alert('Please fill in all fields');
     }
