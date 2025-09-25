@@ -43,15 +43,15 @@ export default function ReportScreen({ navigation }) {
       [
         {
           text: 'Accident',
-          onPress: () => navigation.navigate('AccidentReport') // You can create this screen later
+          onPress: () => navigation.navigate('ReportIncident') // Navigates to detailed accident report
         },
         {
           text: 'Road Hazard',
-          onPress: () => navigation.navigate('HazardReport') // You can create this screen later
+          onPress: () => navigation.navigate('HazardReport') // I will create the screen later
         },
         {
           text: 'Traffic Issue',
-          onPress: () => navigation.navigate('TrafficReport') // You can create this screen later
+          onPress: () => navigation.navigate('TrafficReport') // I will create this later
         },
         {
           text: 'Cancel',
@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    alignItems: 'center',
   },
   header: {
     backgroundColor: '#1a237e',

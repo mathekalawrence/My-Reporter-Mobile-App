@@ -1,6 +1,7 @@
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
+import ReportIncidentScreen from '../screens/ReportIncidentScreen.js';
 import ReportScreen from '../screens/ReportScreen.js';
 import SignupScreen from '../screens/SignupScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
@@ -26,7 +27,7 @@ export default function App() {
         <Stack.Screen 
           name="Welcome" 
           component={WelcomeScreen}
-          options={{ headerShown: false }} // Hide header for welcome screen
+          options={{ headerShown: false }} // Hides header for welcome screen to make it more presentable
         />
         <Stack.Screen 
           name="Login" 
@@ -43,10 +44,16 @@ export default function App() {
           component={ReportScreen}
           options={{ 
             title: 'Road Report',
-            headerLeft: null, // Remove back button on Report screen
-            gestureEnabled: false // Disable swipe back
+            headerLeft: null, // Removes back button on Report screen
+            gestureEnabled: false // Disables swipe back for better interactivity
           }}
         />
+
+        <Stack.Screen 
+       name="ReportIncident" 
+       component={ReportIncidentScreen}
+       options={{ title: 'Report Accident' }} 
+    />
       </Stack.Navigator>
     
   );
