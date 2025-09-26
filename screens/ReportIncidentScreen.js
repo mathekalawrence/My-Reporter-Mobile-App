@@ -331,7 +331,7 @@ const pickFromGallery = async () => {
               value={description}
               onChangeText={setDescription}
               multiline
-              numberOfLines={6}
+              numberOfLines={12}
               textAlignVertical="top"
             />
           </View>
@@ -349,7 +349,7 @@ const pickFromGallery = async () => {
                 </Text>
                 <TextInput
                   style={styles.vehicleInput}
-                  placeholder="0"
+                  placeholder="Enter Value Here.. "
                   placeholderTextColor="#999"
                   value={vehicles[vehicleType]}
                   onChangeText={(value) => updateVehicleCount(vehicleType, value)}
@@ -367,7 +367,7 @@ const pickFromGallery = async () => {
                 </Text>
                 <TextInput
                   style={styles.vehicleInput}
-                  placeholder="0"
+                  placeholder="Please Enter the Value"
                   placeholderTextColor="#999"
                   value={vehicles[personType]}
                   onChangeText={(value) => updateVehicleCount(personType, value)}
@@ -392,7 +392,7 @@ const pickFromGallery = async () => {
                 <Text style={styles.vehicleLabel}>{injury.label}:</Text>
                 <TextInput
                   style={styles.vehicleInput}
-                  placeholder="0"
+                  placeholder="Enter the Value"
                   placeholderTextColor="#999"
                   value={injuries[injury.key]}
                   onChangeText={(value) => updateInjuriesCount(injury.key, value)}
@@ -410,17 +410,17 @@ const pickFromGallery = async () => {
             
             <View style={styles.evidenceButtons}>
               <TouchableOpacity style={styles.evidenceButton} onPress={takePhoto}>
-                <Ionicons name="camera" size={20} color="#1a237e" />
+                <Ionicons name="camera" size={40} color="#1a237e" />
                 <Text style={styles.evidenceButtonText}>Take Photo</Text>
               </TouchableOpacity>
               
               <TouchableOpacity style={styles.evidenceButton} onPress={takeVideo}>
-                <Ionicons name="videocam" size={20} color="#1a237e" />
+                <Ionicons name="videocam" size={40} color="#1a237e" />
                 <Text style={styles.evidenceButtonText}>Record Video</Text>
               </TouchableOpacity>
               
               <TouchableOpacity style={styles.evidenceButton} onPress={pickFromGallery}>
-                <Ionicons name="images" size={20} color="#1a237e" />
+                <Ionicons name="images" size={40} color="#1a237e" />
                 <Text style={styles.evidenceButtonText}>From Gallery</Text>
               </TouchableOpacity>
             </View>
@@ -475,7 +475,7 @@ const pickFromGallery = async () => {
             
             {/* Map Placeholder */}
             <View style={styles.mapPlaceholder}>
-              <Ionicons name="map" size={48} color="#ccc" />
+              <Ionicons name="map" size={100} color="#ccc" />
               <Text style={styles.mapPlaceholderText}>Accident Location Map</Text>
               <Text style={styles.mapNote}>
                 {location ? 'The accident location is shown on the map' : 'Locating accident scene...'}
@@ -528,21 +528,23 @@ const pickFromGallery = async () => {
 const styles = StyleSheet.create({
 container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#b5dda5ff',
     alignItems: 'center',
     marginBottom: 20,
-    padding: 5,
+    padding: 2,
   },
 
   content: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#ffffff',
+    padding: 32,
+    backgroundColor: '#aeddd7ff',
     borderRadius: 10,
-    marginBottom: 15,
+    marginBottom: 4,
     borderWidth: 1,
     borderColor: '#ddd',
     fontSize: 16,
+    marginTop: 0,
+    
   },
   
   accidentBanner: {
@@ -562,7 +564,7 @@ container: {
     fontSize: 14,
   },
   dropdownTitle: {
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#1a237e',
     padding: 15,
@@ -582,6 +584,12 @@ container: {
 
   },
 
+  dropdownText: {
+    fontWeight: 'bold',
+    fontSize: 17,
+
+  },
+
   subsectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -598,6 +606,7 @@ container: {
     marginTop: 10,
     borderLeftWidth: 4,
     borderLeftColor: '#ff5722',
+    marginBottom: 20,
   },
   safetyNoticeText: {
     color: '#d84315',
@@ -678,6 +687,22 @@ container: {
   sectionSubtitle: {
     fontStyle: 'italic',
     fontWeight: 'bold',
+
+  },
+
+  modalOverlay: {
+    backgroundColor: 'yellow',
+  },
+
+  dropdownList: {
+    fontWeight: 'bold',
+  },
+
+  dropdownItem: {
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    padding: 5,
+    fontSize: 13,
   }
   
   
