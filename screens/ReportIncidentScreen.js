@@ -1,18 +1,18 @@
 
 import { useEffect, useState } from 'react';
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -21,7 +21,7 @@ import * as Location from 'expo-location';
 
 export default function ReportIncidentScreen({ navigation, route }) {
   // State management
-  const [incidentType, setIncidentType] = useState('Vehicle Collision'); // Default to common accident type
+  const [incidentType, setIncidentType] = useState('Choose the Accident Type'); // Default to common accident type
   const [description, setDescription] = useState('');
   const [vehicles, setVehicles] = useState({
     car: '',
@@ -44,6 +44,7 @@ export default function ReportIncidentScreen({ navigation, route }) {
 
  // Accident-specific incident types
   const accidentTypes = [
+    'Choose the Accident Type',
     'Vehicle Collision',
     'Slip Off Road', 
     'Rollover Accident',
@@ -93,7 +94,7 @@ export default function ReportIncidentScreen({ navigation, route }) {
     })();
   }, []);
 
-    // Handle emergency call
+    // Handling emergency call
   const handleEmergencyCall = () => {
     const emergencyNumber = '0710689178';
     Alert.alert(
@@ -110,7 +111,7 @@ export default function ReportIncidentScreen({ navigation, route }) {
     );
   };
 
-   // Handle evidence capture
+   // Handling evidence capture
   const takePhoto = async () => {
     try {
       let result = await ImagePicker.launchCameraAsync({
@@ -225,7 +226,7 @@ const pickFromGallery = async () => {
     }
   };
 
-   // Handle cancel
+   // Handling cancel
   const handleCancel = () => {
     if (description || incidentType || evidence.length > 0) {
       Alert.alert(
@@ -251,7 +252,7 @@ const pickFromGallery = async () => {
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={handleCancel} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={24} color="#fff" />
+            {/*<Ionicons name="arrow-back" size={20} color="#fff" /> */}
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Report Accident</Text>
           <View style={styles.headerRight} />
@@ -265,7 +266,7 @@ const pickFromGallery = async () => {
         >
           {/* Emergency Call Button */}
           <TouchableOpacity style={styles.emergencyButton} onPress={handleEmergencyCall}>
-            <Ionicons name="alert-circle" size={24} color="#fff" />
+            <Ionicons name="alert-circle" size={24} color="#6e0202ff" />
             <Text style={styles.emergencyButtonText}>Emergency Call: 0710689178</Text>
           </TouchableOpacity>
 
@@ -277,7 +278,7 @@ const pickFromGallery = async () => {
 
           {/* Accident Type Dropdown */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Accident Type *</Text>
+            <Text style={styles.sectionTitle}>Accident Type </Text>
             <TouchableOpacity 
               style={styles.dropdown}
               onPress={() => setDropdownVisible(!isDropdownVisible)}
@@ -321,7 +322,7 @@ const pickFromGallery = async () => {
 
           {/* Accident Description */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Accident Description *</Text>
+            <Text style={styles.sectionTitle}>Accident Description </Text>
             <Text style={styles.sectionSubtitle}>Please describe what happened in detail</Text>
             <TextInput
               style={styles.textArea}
@@ -530,12 +531,18 @@ container: {
     backgroundColor: '#f5f5f5',
     alignItems: 'center',
     marginBottom: 20,
-    padding: 30,
+    padding: 5,
   },
 
   content: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#ffffff',
+    borderRadius: 10,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    fontSize: 16,
   },
   
   accidentBanner: {
@@ -555,15 +562,28 @@ container: {
     fontSize: 14,
   },
   dropdownTitle: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#1a237e',
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
+
   },
+  sectionTitle: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    padding: 10
+
+  },
+
+  dropdownTitleText: {
+    fontWeight: 'bold',
+
+  },
+
   subsectionTitle: {
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
     marginTop: 10,
@@ -601,6 +621,64 @@ container: {
     shadowRadius: 5,
     elevation: 6,
   }, */
+
+  submitButton: {
+    backgroundColor: '#1a237e',
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 10,
+    alignItems: 'center',
+  
+  },
+  submitButtonText: {
+    color: '#ffffff',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
+  input: {
+    backgroundColor: '#ffffff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    fontSize: 16,
+  },
+
+  emergencyButton:{
+    backgroundColor: 'red',
+    borderRadius: 10,
+    alignItems: 'center',
+    padding: 10,
+    marginBottom: 10,
+    
+  },
+  emergencyButtonText: {
+    fontWeight: 'bold',
+    fontSize: 17,
+    color: 'green',
+
+  },
+
+  header: {
+    backgroundColor: 'green',
+    marginBottom: 10,
+    marginTop: 0,
+    
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    padding: 15,
+     
+  },
+
+  sectionSubtitle: {
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+  }
   
   
  
