@@ -94,7 +94,7 @@ export default function ReportIncidentScreen({ navigation, route }) {
     })();
   }, []);
 
-    // Handling emergency call
+    // Handling emergency call/ Distress Call
   const handleEmergencyCall = () => {
     const emergencyNumber = '0710689178';
     Alert.alert(
@@ -454,7 +454,7 @@ const pickFromGallery = async () => {
             <Text style={styles.sectionTitle}>Accident Location</Text>
             {location ? (
               <View style={styles.locationBox}>
-                <Ionicons name="location" size={24} color="#1a237e" />
+                <Ionicons name="location" size={30} color="#1a237e" />
                 <View style={styles.locationInfo}>
                   <Text style={styles.locationText}>
                     Latitude: {location.latitude.toFixed(6)}

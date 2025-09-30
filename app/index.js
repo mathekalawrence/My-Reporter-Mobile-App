@@ -1,5 +1,6 @@
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import BookParkingScreen from '../screens/BookParkingScreen.js';
 import LoginScreen from '../screens/LoginScreen';
 import ReportIncidentScreen from '../screens/ReportIncidentScreen.js';
 import ReportScreen from '../screens/ReportScreen.js';
@@ -43,17 +44,24 @@ export default function App() {
           name="Report" 
           component={ReportScreen}
           options={{ 
-            title: 'Road Report',
-            headerLeft: null, // Removes back button on Report screen
-            gestureEnabled: false // Disables swipe back for better interactivity
+          title: 'Road Report',
+          headerLeft: null, // Removes back button on Report screen
+          gestureEnabled: false // Disables swipe back for better interactivity
           }}
         />
 
-        <Stack.Screen 
+      <Stack.Screen 
        name="ReportIncident" 
        component={ReportIncidentScreen}
        options={{ title: 'Report Accident' }} 
-    />
+      />
+
+      <Stack.Screen
+      name="BookParking"
+      component={BookParkingScreen}
+      options={{ title: 'Book Parking'}}
+      />
+
       </Stack.Navigator>
     
   );

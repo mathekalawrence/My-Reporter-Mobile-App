@@ -1,14 +1,14 @@
 
 import { Ionicons } from '@expo/vector-icons';
 import {
-    Alert,
-    Linking,
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Alert,
+  Linking,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
 export default function ReportScreen({ navigation }) {
@@ -53,6 +53,8 @@ export default function ReportScreen({ navigation }) {
           text: 'Traffic Issue',
           onPress: () => navigation.navigate('TrafficReport') // I will create this later
         },
+
+
         {
           text: 'Cancel',
           style: 'cancel'
@@ -60,6 +62,12 @@ export default function ReportScreen({ navigation }) {
       ]
     );
   };
+
+  //Function to handle book parking
+  const handleBookParking = () => {
+
+  }
+
 
   // Function to handle logout
   const handleLogout = () => {
@@ -150,13 +158,24 @@ export default function ReportScreen({ navigation }) {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Quick Actions</Text>
           
-          {/* Report Incident Button */}
+          {/* 'Report Incident' Button */}
           <TouchableOpacity 
             style={styles.reportButton}
             onPress={handleReportIncident}
           >
             <Ionicons name="warning" size={24} color="#fff" />
             <Text style={styles.reportButtonText}>Report an Incident</Text>
+          </TouchableOpacity>
+
+          {/* Book Parking Button */}
+          <TouchableOpacity
+           style={styles.bookParkingButton}
+           onPress={()=> navigation.navigate('BookParking')}
+        
+          >
+
+            <Ionicons name="" size={24} color="#fff" />
+            <Text style={styles.bookParkingButtonText}>Book Parking</Text>
           </TouchableOpacity>
 
           {/* Additional Quick Actions */}
@@ -295,12 +314,36 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 6,
   },
-  reportButtonText: {
+
+   reportButtonText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
   },
+
+  bookParkingButton: {
+    backgroundColor: '#1a237e',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 18,
+    borderRadius: 10,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 6,
+  },
+
+   bookParkingButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+
   quickActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
