@@ -202,7 +202,9 @@ const BookParkingScreen = () => {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>🚗 Book Parking</Text>
-        <Text style={styles.subtitle}>Find and reserve parking spots in Nairobi</Text>
+        <Text style={styles.subtitle}>Find and reserve parking spots in our cities. </Text>
+            
+        <Text style={styles.subtitle2}>Okoa time na doo!</Text>
       </View>
 
       <View style={styles.formContainer}>
@@ -217,8 +219,9 @@ const BookParkingScreen = () => {
             >
               <Picker.Item label="Nairobi" value="Nairobi" />
               <Picker.Item label="Mombasa" value="Mombasa" />
-              <Picker.Item label="Kisumu" value="Kisumu" />
+              <Picker.Item label="Machakos" value="Machakos" />
               <Picker.Item label="Nakuru" value="Nakuru" />
+              <Picker.Item label="Kisumu" value="Kisumu" />  
             </Picker>
           </View>
         </View>
@@ -462,6 +465,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     marginTop: 5,
+    fontStyle: 'italic',
   },
   formContainer: {
     padding: 20,
