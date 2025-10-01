@@ -712,8 +712,123 @@ container: {
     width: '100%'
   },
 
+  locationBox: {
+    
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,  
 
+  },
+
+  section: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+     elevation: 2,
+  },
+
+  dropdowm: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+
+  sectiond: {
+
+  flexDirection: 'column',   
+  backgroundColor: '#fff',
+  padding: 30,               
+  borderRadius: 12,
+  marginBottom: 20,
+  borderWidth: 1,
+  borderColor: '#e0e0e0',
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 3 },
+  shadowOpacity: 0.15,
+  shadowRadius: 6,
+  elevation: 4,             
+  minHeight: 200,            
+
+  },
+
+  textArea: {
   
+  flexDirection: 'column',  
+  backgroundColor: '#fff',
+  padding: 30,               
+  borderRadius: 12,
+  marginBottom: 20,
+  borderWidth: 1,
+  borderColor: '#e0e0e0',
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 3 },
+  shadowOpacity: 0.15,
+  shadowRadius: 6,
+  elevation: 4,              
+  minHeight: 200,            
+
+  },
+
+  evidenceButtons: {
   
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+    padding: '20px',
+    borderRadius: '12px',
+    marginBottom: '20px',
+    border: '1px solid #e0e0e0',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.15)',
+    minHeight: '100px'
+
+  },
+
+  cancelButton: {
+    backgroundColor: '#1rgba(220, 222, 236, 1)',
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 10,
+    alignItems: 'center',
+
+
+  },
+
+  cancelButtonText: {
+    color: '#da571bff',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
+
  
 });
