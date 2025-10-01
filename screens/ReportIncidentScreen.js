@@ -780,23 +780,6 @@ container: {
 
   },
 
-  textArea: {
-  
-  flexDirection: 'column',  
-  backgroundColor: '#fff',
-  padding: 30,               
-  borderRadius: 12,
-  marginBottom: 20,
-  borderWidth: 1,
-  borderColor: '#e0e0e0',
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-  elevation: 4,              
-  minHeight: 200,            
-
-  },
 
   evidenceButtons: {
   
@@ -821,6 +804,7 @@ container: {
 
 
   },
+
 
   cancelButtonText: {
     color: '#da571bff',
