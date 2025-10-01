@@ -177,7 +177,7 @@ const pickFromGallery = async () => {
     }));
   };
 
-  // Handle injuries count change
+  // Handling injuries count change
   const updateInjuriesCount = (injuryType, value) => {
     setInjuries(prev => ({
       ...prev,
@@ -185,7 +185,7 @@ const pickFromGallery = async () => {
     }));
   };
 
- // Handle form submission
+ // Handling form submission
   const handleSubmit = async () => {
     // Validation
     if (!incidentType) {
@@ -673,14 +673,17 @@ container: {
 
   header: {
     backgroundColor: 'green',
-    marginBottom: 10,
+    marginBottom: 0,
     marginTop: 0,
+    width: '100%'
     
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     padding: 15,
+    textAlign: 'center'
+    
      
   },
 
@@ -703,7 +706,13 @@ container: {
     fontStyle: 'italic',
     padding: 5,
     fontSize: 13,
-  }
+  },
+
+  headerRight: {
+    width: '100%'
+  },
+
+
   
   
  
