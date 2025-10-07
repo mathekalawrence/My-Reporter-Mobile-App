@@ -93,8 +93,8 @@ export default function ReportScreen({ navigation }) {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <Ionicons name="car-sport" size={28} color="#fff" />
-          <Text style={styles.headerTitle}>Road Report</Text>
+          <Ionicons name="car-sport" size={30} color="#fff" />
+          <Text style={styles.headerTitle}> The Road/s Report</Text>
         </View>
         <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
           <Ionicons name="log-out-outline" size={24} color="#fff" />
@@ -178,6 +178,15 @@ export default function ReportScreen({ navigation }) {
             <Text style={styles.bookParkingButtonText}>Book Parking</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity
+           style={styles.bookParkingButton}
+           onPress={()=> navigation.navigate('CheckTraffic')}
+        
+          >
+            <Ionicons name="" size={24} color="#fff" />
+            <Text style={styles.bookParkingButtonText}>Check Traffic</Text>
+          </TouchableOpacity>
+
           {/* Additional Quick Actions */}
           <View style={styles.quickActions}>
             <TouchableOpacity style={styles.quickAction}>
@@ -205,7 +214,8 @@ export default function ReportScreen({ navigation }) {
             • Ensure your own safety first{'\n'}
             • Provide clear location details when reporting{'\n'}
             • Follow instructions from emergency services{'\n'}
-            • Keep emergency numbers handy
+            • Keep emergency numbers handy{'\n'}
+            • Please do the necessary with care.
           </Text>
         </View>
       </ScrollView>
@@ -231,6 +241,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
+    width: '100%',
+    textAlign: 'center'
   },
   headerContent: {
     flexDirection: 'row',

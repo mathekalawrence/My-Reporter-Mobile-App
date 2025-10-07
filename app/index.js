@@ -1,10 +1,12 @@
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BookParkingScreen from '../screens/BookParkingScreen.js';
+import CheckTrafficScreen from '../screens/CheckTrafficScreen';
 import LoginScreen from '../screens/LoginScreen';
 import ReportIncidentScreen from '../screens/ReportIncidentScreen.js';
 import ReportScreen from '../screens/ReportScreen.js';
 import SignupScreen from '../screens/SignupScreen';
+import SmartRouterScreen from '../screens/SmartRouterScreen.js';
 import WelcomeScreen from '../screens/WelcomeScreen';
 
 // Create stack navigator
@@ -60,6 +62,18 @@ export default function App() {
       name="BookParking"
       component={BookParkingScreen}
       options={{ title: 'Book Parking'}}
+      />
+
+      <Stack.Screen
+      name="CheckTraffic"
+      component={CheckTrafficScreen}
+      options={{ title: 'State of Traffic'}}
+      />
+
+      <Stack.Screen
+      name="SmartRouter"
+      component={SmartRouterScreen}
+      options={{ title: 'Smart Router'}}
       />
 
       </Stack.Navigator>

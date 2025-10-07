@@ -672,7 +672,7 @@ container: {
   },
 
   header: {
-    backgroundColor: 'green',
+    backgroundColor: 'white',
     marginBottom: 0,
     marginTop: 0,
     width: '100%'
@@ -682,8 +682,7 @@ container: {
     fontSize: 24,
     fontWeight: 'bold',
     padding: 15,
-    textAlign: 'center'
-    
+    textAlign: 'center' 
      
   },
 
@@ -695,6 +694,26 @@ container: {
 
   modalOverlay: {
     backgroundColor: 'yellow',
+    width: 300,
+    borderRadius: 20,
+    paddingTop: 40,
+    paddingLeft: 30,
+    marginTop: 53,
+    marginLeft: 30.5,
+    
+    //flexDirection: 'column',
+    //alignItems: 'center',
+    //backgroundColor: '#fff',
+    //padding: 15,
+    //borderRadius: 10,
+    //marginBottom: 10,
+   // borderWidth: 1,
+    //borderColor: '#e0e0e0',
+    //shadowColor: '#000',
+    //shadowOffset: { width: 0, height: 1 },
+    //shadowOpacity: 0.1,
+    //shadowRadius: 3,
+     //elevation: 2, 
   },
 
   dropdownList: {
@@ -743,7 +762,7 @@ container: {
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
-     elevation: 2,
+    elevation: 2,
   },
 
   dropdowm: {
@@ -780,7 +799,6 @@ container: {
 
   },
 
-
   evidenceButtons: {
   
     display: 'flex',
@@ -802,9 +820,7 @@ container: {
     marginTop: 10,
     alignItems: 'center',
 
-
   },
-
 
   cancelButtonText: {
     color: '#da571bff',
