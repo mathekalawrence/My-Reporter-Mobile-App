@@ -15,17 +15,7 @@ import {
   View,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-
-{/*
-import { Text, View } from 'react-native';
-
-export default function BookParking() {
-  return (
-    <View>
-      <Text>Book Parking Screen</Text>
-    </View>
-  );
-} */}
+import { supabase } from '../src/lib/supabase';
 
 const BookParkingScreen = () => {
   const [selectedCity, setSelectedCity] = useState('Nairobi');
@@ -41,8 +31,51 @@ const BookParkingScreen = () => {
   const [availableSpots, setAvailableSpots] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [user, setUser] = useState(null);
 
-  // Parking spots data for Nairobi
+  // Get current user
+  useEffect(() => {
+    getCurrentUser();
+    fetchParkingSpots();
+  }, []);
+
+  const getCurrentUser = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    setUser(user);
+  };
+
+  // Fetch parking spots from Supabase
+  const fetchParkingSpots = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('parking_spots')
+        .select('*')
+        .eq('city', selectedCity)
+        .eq('is_active', true);
+
+      if (error) throw error;
+
+      // Transform data to match your existing structure
+      const transformedSpots = data.map(spot => ({
+        id: spot.id,
+        name: spot.name,
+        address: spot.address,
+        coordinates: { latitude: spot.latitude, longitude: spot.longitude },
+        available: spot.available_spots > 0,
+        rate: spot.rate,
+        capacity: spot.capacity,
+        availableSpots: spot.available_spots,
+      }));
+
+      setAvailableSpots(transformedSpots);
+    } catch (error) {
+      console.error('Error fetching parking spots:', error);
+      // Fallback to hardcoded data if Supabase fails
+      setAvailableSpots(nairobiParkingSpots);
+    }
+  };
+
+  // Hardcoded data as fallback
   const nairobiParkingSpots = [
     {
       id: 1,
@@ -87,15 +120,14 @@ const BookParkingScreen = () => {
   ];
 
   useEffect(() => {
-    setAvailableSpots(nairobiParkingSpots);
     calculateTotalCost();
-  }, [duration]);
+  }, [duration, selectedParkingSpot]);
 
   const calculateTotalCost = () => {
     if (selectedParkingSpot) {
       setTotalCost(selectedParkingSpot.rate * duration);
     } else {
-      setTotalCost(60 * duration); // Default rate
+      setTotalCost(60 * duration);
     }
   };
 
@@ -117,7 +149,156 @@ const BookParkingScreen = () => {
     }
     setShowPaymentModal(true);
   };
+  
+  const testDatabase = async () => {
+  console.log('Testing database...');
+  
+  const { data, error } = await supabase
+    .from('parking_spots')
+    .select('*')
+    .limit(1);
 
+  if (error) {
+    console.log('❌ CANNOT CONNECT:', error);
+    Alert.alert('Connection Failed', error.message);
+  } else {
+    console.log('✅ CONNECTION WORKS! Data:', data);
+    Alert.alert('Connection Success', 'Database is working!');
+  }
+};
+
+  //Processing payments
+  const processPayment = async () => {
+  console.log('🔄 Starting payment process...');
+  
+  if (!paymentMethod) {
+    Alert.alert('Error', 'Please select MPESA or Airtel');
+    return;
+  }
+  if (!phoneNumber) {
+    Alert.alert('Error', 'Please enter phone number');
+    return;
+  }
+
+  setIsProcessing(true);
+
+  try {
+    console.log('📦 Preparing data for Supabase...');
+    
+    // SIMPLE DATA - NO USER AUTH NEEDED
+    const bookingData = {
+      parking_spot_id: selectedParkingSpot.id,
+      start_time: selectedDate.toISOString(),
+      duration: duration,
+      total_cost: totalCost,
+      payment_method: paymentMethod,
+      phone_number: phoneNumber,
+      vehicle_number: 'KAA 123A', // Default value
+      status: 'confirmed'
+    };
+
+    console.log('Sending to Supabase:', bookingData);
+
+    // SEND TO SUPABASE
+    const { data, error } = await supabase
+      .from('bookings')
+      .insert([bookingData])
+      .select();
+
+    if (error) {
+      console.log('❌ SUPABASE ERROR:', error);
+      Alert.alert('Database Error', error.message);
+      return;
+    }
+
+    console.log('✅ SUCCESS! Booking saved:', data);
+    
+    // SUCCESS MESSAGE
+    Alert.alert(
+      '🎉 BOOKING CONFIRMED!',
+      `Your parking is booked!\n\nLocation: ${selectedParkingSpot.name}\nDuration: ${duration} hours\nTotal: Ksh ${totalCost}\nBooking ID: ${data[0].id}`,
+      [{ text: 'OK' }]
+    );
+
+    // RESET FORM
+    setSelectedParkingSpot(null);
+    setParkingLocation('');
+    setDuration(1);
+    setPaymentMethod('');
+    setPhoneNumber('');
+    setShowPaymentModal(false);
+
+  } catch (error) {
+    console.log('❌ CATCH ERROR:', error);
+    Alert.alert('Error', 'Something went wrong');
+  } finally {
+    setIsProcessing(false);
+  }
+};
+
+  {/*
+
+  const processPayment = async () => {
+  if (!paymentMethod) {
+    Alert.alert('Error', 'Please select a payment method');
+    return;
+  }
+  if (!phoneNumber) {
+    Alert.alert('Error', 'Please enter your phone number');
+    return;
+  }
+
+  setIsProcessing(true);
+
+  try {
+    // SIMPLE VERSION - Only use columns that definitely exist
+    const { data: booking, error } = await supabase
+      .from('bookings')
+      .insert([
+        {
+          parking_spot_id: selectedParkingSpot.id,
+          start_time: selectedDate.toISOString(),
+          total_cost: totalCost,
+          duration: duration, // This will work after running the SQL
+          payment_method: paymentMethod,
+          phone_number: phoneNumber
+        }
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.log('Database Error:', error);
+      Alert.alert('Database Error', error.message);
+      return;
+    }
+
+    // SUCCESS!
+    setIsProcessing(false);
+    setShowPaymentModal(false);
+    
+    Alert.alert(
+      'Booking Confirmed!',
+      `Booking saved! ID: ${booking.id}`,
+      [{ text: 'OK' }]
+    );
+
+    // Reset form
+    setSelectedParkingSpot(null);
+    setParkingLocation('');
+    setDuration(1);
+    setPaymentMethod('');
+    setPhoneNumber('');
+
+  } catch (error) {
+    setIsProcessing(false);
+    Alert.alert('Error', 'Booking failed');
+  }
+};
+*/}
+
+  // Save booking to Supabase
+  {/* 
   const processPayment = async () => {
     if (!paymentMethod) {
       Alert.alert('Error', 'Please select a payment method');
@@ -130,28 +311,45 @@ const BookParkingScreen = () => {
 
     setIsProcessing(true);
 
-    // Simulate payment processing
-    setTimeout(() => {
+    try {
+      // 1. Save booking to Supabase
+      const { data: booking, error } = await supabase
+        .from('bookings')
+        .insert([
+          {
+            user_id: user?.id,
+            parking_spot_id: selectedParkingSpot.id,
+            vehicle_number: 'KAA 123A', // You can add input for this
+            start_time: selectedDate.toISOString(),
+            duration: duration,
+            total_cost: totalCost,
+            payment_method: paymentMethod,
+            phone_number: phoneNumber,
+            status: 'confirmed'
+          }
+        ])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // 2. Update available spots count
+      await supabase
+        .from('parking_spots')
+        .update({ 
+          available_spots: selectedParkingSpot.availableSpots - 1 
+        })
+        .eq('id', selectedParkingSpot.id);
+
+      // 3. Show success
       setIsProcessing(false);
       setShowPaymentModal(false);
       
-      // Generate booking confirmation
-      const bookingDetails = {
-        id: Math.random().toString(36).substr(2, 9),
-        spot: selectedParkingSpot.name,
-        location: selectedParkingSpot.address,
-        duration: duration,
-        totalCost: totalCost,
-        date: selectedDate.toLocaleDateString(),
-        time: selectedDate.toLocaleTimeString(),
-        paymentMethod: paymentMethod,
-      };
-
       Alert.alert(
         'Booking Confirmed!',
         `Your parking has been booked successfully!\n\n` +
-        `Booking ID: ${bookingDetails.id}\n` +
-        `Location: ${bookingDetails.spot}\n` +
+        `Booking ID: ${booking.id}\n` +
+        `Location: ${selectedParkingSpot.name}\n` +
         `Duration: ${duration} hour(s)\n` +
         `Total: Ksh ${totalCost}\n` +
         `Payment: ${paymentMethod}\n\n` +
@@ -166,12 +364,134 @@ const BookParkingScreen = () => {
               setDuration(1);
               setPaymentMethod('');
               setPhoneNumber('');
+              // Refresh spots
+              fetchParkingSpots();
             },
           },
         ]
       );
-    }, 3000);
+
+    } catch (error) {
+      setIsProcessing(false);
+      console.error('Booking error:', error);
+      Alert.alert('Error', 'Booking failed. Please try again.');
+    }
   };
+
+  */}
+
+  {/*
+
+  const processPayment = async () => {
+  if (!paymentMethod) {
+    Alert.alert('Error', 'Please select a payment method');
+    return;
+  }
+  if (!phoneNumber) {
+    Alert.alert('Error', 'Please enter your phone number');
+    return;
+  }
+
+  setIsProcessing(true);
+
+  // SIMPLE VERSION - JUST SAVE TO DATABASE
+  try {
+    // 1. Get user
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    // 2. Save booking to Supabase
+    const { data: booking, error } = await supabase
+      .from('bookings')
+      .insert([
+        {
+          user_id: user?.id || 'anonymous',
+          parking_spot_id: selectedParkingSpot.id,
+          vehicle_number: 'KAE 123C',
+          start_time: selectedDate.toISOString(),
+          duration: duration,
+          total_cost: totalCost,
+          payment_method: paymentMethod,
+          phone_number: phoneNumber,
+          status: 'confirmed'
+        }
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.log('❌ Database error:', error);
+      Alert.alert('Error', 'Failed to save booking');
+      return;
+    }
+
+    // 3. SUCCESS!
+    console.log('✅ Booking saved to Supabase! ID:', booking.id);
+    
+    setIsProcessing(false);
+    setShowPaymentModal(false);
+    
+    Alert.alert(
+      'Booking Confirmed!',
+      `Saved to database! Booking ID: ${booking.id}`,
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            setSelectedParkingSpot(null);
+            setParkingLocation('');
+            setDuration(1);
+            setPaymentMethod('');
+            setPhoneNumber('');
+          },
+        },
+      ]
+    );
+
+  } catch (error) {
+    setIsProcessing(false);
+    console.log('❌ Error:', error);
+    Alert.alert('Error', 'Booking failed');
+  }
+}; 
+*/}
+
+{/*
+
+const processPayment = async () => {
+  console.log('🎯 PAYMENT BUTTON CLICKED!');
+  
+  setIsProcessing(true);
+  
+  try {
+    // JUST SAVE THE BOOKING - NOTHING ELSE
+    const { data, error } = await supabase
+      .from('bookings')
+      .insert([
+        {
+          parking_spot_id: 1, // Hardcoded for testing
+          duration: 2,
+          total_cost: 200,
+          payment_method: 'mpesa',
+          phone_number: '0719687779',
+          status: 'confirmed'
+        }
+      ]);
+    
+    if (error) {
+      console.log('ERROR:', error);
+      Alert.alert('Database Error', error.message);
+    } else {
+      console.log('SUCCESS! Data saved');
+      Alert.alert('Success', 'Booking saved to database!');
+    }
+    
+  } catch (error) {
+    console.log('CATCH ERROR:', error);
+  }
+  
+  setIsProcessing(false);
+  setShowPaymentModal(false);
+}; */}
 
   const renderParkingSpot = (spot) => (
     <TouchableOpacity
@@ -202,8 +522,7 @@ const BookParkingScreen = () => {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>🚗 Book Parking</Text>
-        <Text style={styles.subtitle}>Find and reserve parking spots in our cities. </Text>
-            
+        <Text style={styles.subtitle}>Find and reserve parking spots in our cities.</Text>            
         <Text style={styles.subtitle2}>Okoa time na doo!</Text>
       </View>
 
@@ -214,12 +533,18 @@ const BookParkingScreen = () => {
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={selectedCity}
-              onValueChange={(itemValue) => setSelectedCity(itemValue)}
+              onValueChange={(itemValue) => {
+                setSelectedCity(itemValue);
+                fetchParkingSpots();
+              }}
               style={styles.picker}
             >
               <Picker.Item label="Nairobi" value="Nairobi" />
               <Picker.Item label="Mombasa" value="Mombasa" />
               <Picker.Item label="Machakos" value="Machakos" />
+              <Picker.Item label="Kitui" value="Kitui" />
+              <Picker.Item label="Garissa" value="Garissa" />
+             
               <Picker.Item label="Nakuru" value="Nakuru" />
               <Picker.Item label="Kisumu" value="Kisumu" />  
             </Picker>
@@ -239,6 +564,11 @@ const BookParkingScreen = () => {
             <Text style={styles.mapIcon}>🗺️</Text>
           </TouchableOpacity>
         </View>
+
+{/*
+        <TouchableOpacity onPress={testDatabase} style={{backgroundColor: 'red', padding: 10}}>
+  <Text style={{color: 'white'}}>TEST DATABASE</Text>
+</TouchableOpacity> */}
 
         {/* Date and Time Selection */}
         <View style={styles.inputGroup}>
@@ -466,6 +796,11 @@ const styles = StyleSheet.create({
     color: 'white',
     marginTop: 5,
     fontStyle: 'italic',
+  },
+  subtitle2: {
+    fontSize: 14,
+    color: 'white',
+    marginTop: 2,
   },
   formContainer: {
     padding: 20,
@@ -772,9 +1107,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 10,
   },
-  disabledConfirmButton: {
-    backgroundColor: '#bdc3c7',
-  },
   confirmButtonText: {
     color: 'white',
     fontSize: 16,
@@ -783,4 +1115,3 @@ const styles = StyleSheet.create({
 });
 
 export default BookParkingScreen;
-

@@ -11,15 +11,18 @@ import {
   View
 } from 'react-native';
 
+   
 export default function SignupScreen({ navigation }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
+  //{/*
   const handleSignup = () => {
     // Simple validation
-    if (name && email && password && confirmPassword) {
+     if (name && email && password && confirmPassword) {
       if (password === confirmPassword) {
         alert('Account created successfully!');
        // navigation.navigate('Login');
@@ -35,9 +38,33 @@ export default function SignupScreen({ navigation }) {
     } else {
       alert('Please fill in all fields');
     }
-  };
+   };
+   //*/}
+
+   {/*
+
+    const handleSignup = async () => {
+
+      //const navigation = useNavigation(); 
+    setLoading(true);
+    
+    const { data, error } = await supabase.auth.signUp({
+      email: email, 
+      password: password,
+    });
+
+    if (error) {
+      Alert.alert('Signup Failed', error.message);
+    } else {
+      Alert.alert('Success!', 'Check your email for verification');
+    }
+    
+    setLoading(false);
+
+    }; */}
 
   return (
+    //<StackNavigator>
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -105,8 +132,9 @@ export default function SignupScreen({ navigation }) {
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
+    //</StackNavigator>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -171,4 +199,5 @@ const styles = StyleSheet.create({
     color: '#1a237e',
     fontSize: 16,
   },
+
 });

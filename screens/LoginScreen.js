@@ -11,6 +11,7 @@ import {
   View
 } from 'react-native';
 
+
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,7 +30,34 @@ export default function LoginScreen({ navigation }) {
     } else {
       alert('Please fill in all fields');
     }
+  }; 
+
+  {/*
+
+  export default function LoginScreen() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // MOBILE APP LOGIN
+  const handleLogin = async () => {
+    setLoading(true);
+    
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    if (error) {
+      Alert.alert('Login Failed', error.message);
+    } else {
+      Alert.alert('Success!', `Welcome ${data.user.email}`);
+      // Navigate to parking screen
+    }
+    
+    setLoading(false);
   };
+  */}
 
   return (
     <SafeAreaView style={styles.container}>
