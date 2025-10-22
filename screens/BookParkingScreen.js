@@ -12,10 +12,11 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { supabase } from '../src/lib/supabase';
+
 
 const BookParkingScreen = () => {
   const [selectedCity, setSelectedCity] = useState('Nairobi');
@@ -32,8 +33,11 @@ const BookParkingScreen = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [user, setUser] = useState(null);
+  const [make, setMake] = useState("");
+  const [model, setModel] = useState("");
+  const [plate, setPlate] = useState("");
 
-  // Get current user
+  // Getting the current user
   useEffect(() => {
     getCurrentUser();
     fetchParkingSpots();
@@ -44,7 +48,7 @@ const BookParkingScreen = () => {
     setUser(user);
   };
 
-  // Fetch parking spots from Supabase
+  // Fetching parking spots from Supabase
   const fetchParkingSpots = async () => {
     try {
       const { data, error } = await supabase
@@ -55,7 +59,7 @@ const BookParkingScreen = () => {
 
       if (error) throw error;
 
-      // Transform data to match your existing structure
+      // Transforming data to match the existing structure
       const transformedSpots = data.map(spot => ({
         id: spot.id,
         name: spot.name,
@@ -79,7 +83,7 @@ const BookParkingScreen = () => {
   const nairobiParkingSpots = [
     {
       id: 1,
-      name: 'CBD Parking Complex',
+      name: 'CBD Parking ComplexHQ',
       address: 'Moi Avenue, Nairobi CBD',
       coordinates: { latitude: -1.2921, longitude: 36.8219 },
       available: true,
@@ -89,7 +93,7 @@ const BookParkingScreen = () => {
     },
     {
       id: 2,
-      name: 'Westlands Secure Parking',
+      name: 'Westlands Area2 Secure Parking',
       address: 'Westlands, Mpaka Road',
       coordinates: { latitude: -1.2684, longitude: 36.8061 },
       available: true,
@@ -117,6 +121,31 @@ const BookParkingScreen = () => {
       capacity: 100,
       availableSpots: 25,
     },
+
+
+    {
+      id: 6,
+      name: 'CBD GPO Parking',
+      address: 'GPO House',
+      coordinates: { latitude: -1.2146, longitude: 36.8853 },
+      available: true,
+      rate: 90,
+      capacity: 10,
+      availableSpots: 15,
+    },
+
+    {
+      id: 10,
+      name: 'CBD Ordeon Ambassador',
+      address: 'Ordeon House',
+      coordinates: { latitude: -1.2146, longitude: 36.8853 },
+      available: true,
+      rate: 115,
+      capacity: 65,
+      availableSpots: 45,
+    },
+
+
   ];
 
   useEffect(() => {
@@ -167,6 +196,7 @@ const BookParkingScreen = () => {
   }
 };
 
+
   //Processing payments
   const processPayment = async () => {
   console.log('🔄 Starting payment process...');
@@ -185,7 +215,7 @@ const BookParkingScreen = () => {
   try {
     console.log('📦 Preparing data for Supabase...');
     
-    // SIMPLE DATA - NO USER AUTH NEEDED
+    // Simple Placeholder data with No authentication for now
     const bookingData = {
       parking_spot_id: selectedParkingSpot.id,
       start_time: selectedDate.toISOString(),
@@ -193,13 +223,13 @@ const BookParkingScreen = () => {
       total_cost: totalCost,
       payment_method: paymentMethod,
       phone_number: phoneNumber,
-      vehicle_number: 'KAA 123A', // Default value
+      vehicle_number: 'KAC 100A', // Default value
       status: 'confirmed'
     };
 
     console.log('Sending to Supabase:', bookingData);
 
-    // SEND TO SUPABASE
+    // Sending data to Supabase
     const { data, error } = await supabase
       .from('bookings')
       .insert([bookingData])
@@ -458,12 +488,12 @@ const BookParkingScreen = () => {
 {/*
 
 const processPayment = async () => {
-  console.log('🎯 PAYMENT BUTTON CLICKED!');
+  console.log('PAYMENT BUTTON CLICKED!');
   
   setIsProcessing(true);
   
   try {
-    // JUST SAVE THE BOOKING - NOTHING ELSE
+    // Just basic saving of the data - NOTHING ELSE
     const { data, error } = await supabase
       .from('bookings')
       .insert([
@@ -515,6 +545,7 @@ const processPayment = async () => {
         <Text style={styles.spotRate}>Ksh {spot.rate}/hour</Text>
         <Text style={styles.spotCapacity}>Capacity: {spot.capacity}</Text>
       </View>
+
     </TouchableOpacity>
   );
 
@@ -593,6 +624,45 @@ const processPayment = async () => {
             />
           )}
         </View>
+
+  {/* Vehicle Details */}
+  {/* 
+        <Card style={styles.card}>
+        <Card.Title title="Vehicle Details" />
+        <Card.Content>
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Vehicle Make</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="e.g. Toyota"
+              value={make}
+              onChangeText={setMake}
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Vehicle Model</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="e.g. Corolla"
+              value={model}
+              onChangeText={setModel}
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>License Plate</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Like... KBQ 623A"
+              value={plate}
+              onChangeText={setPlate}
+            />
+          </View>
+        </Card.Content>
+      </Card>
+      */}
+
 
         {/* Duration Selection */}
         <View style={styles.inputGroup}>
@@ -722,6 +792,7 @@ const processPayment = async () => {
                 >
                   <Text style={styles.paymentText}>M-Pesa</Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   style={[
                     styles.paymentMethod,
@@ -731,6 +802,18 @@ const processPayment = async () => {
                 >
                   <Text style={styles.paymentText}>Airtel Money</Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[
+                    styles.paymentMethod,
+                    paymentMethod === 'bank' && styles.selectedPayment,
+                  ]}
+                  onPress={() => setPaymentMethod('bank')}
+                >
+                  <Text style={styles.paymentText}>Select Bank</Text>
+                </TouchableOpacity>
+
+
               </View>
             </View>
 
@@ -1112,6 +1195,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+
+  card: {
+    borderRadius: 12,
+    elevation: 3,
+  },
+
 });
 
 export default BookParkingScreen;

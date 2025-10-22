@@ -109,7 +109,7 @@ const RealTimeTrafficScreen = () => {
     });
   };
 
-  // Convert coordinates to address
+  // Converting coordinates to address
   const reverseGeocode = async (lat, lng) => {
     try {
       const response = await axios.get(
@@ -125,7 +125,7 @@ const RealTimeTrafficScreen = () => {
     }
   };
 
-  // Convert destination name to coordinates
+  // Converting destination name to coordinates
   const geocodeDestination = async (destinationName) => {
     try {
       const response = await axios.get(
@@ -147,7 +147,7 @@ const RealTimeTrafficScreen = () => {
     }
   };
 
-  // Get route from Google Directions API
+  // Getting route from Google Directions API
   const getGoogleMapsRoute = async (startCoords, endCoords) => {
     const API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY'; // Replace with actual key
     
