@@ -55,7 +55,7 @@ const RealTimeTrafficScreen = () => {
         );
         return granted === PermissionsAndroid.RESULTS.GRANTED;
       } catch (err) {
-        console.warn(err);
+        console.warn(err); 
         return false;
       }
     }
