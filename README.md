@@ -8,9 +8,9 @@ A comprehensive smart parking solution that reduces urban traffic congestion and
 ## Sustainable Development Impact 
 
 **Primary Sustainable Development Goal: - Sustainable Cities and Communities**
-- **Target:** Providing access to sustainable transport systems
-- **Target:** Reduce environmental impacts in cities
-- **Target:** Integrate climate change measures into policies
+- **Target 1:** Providing access to sustainable transport systems
+- **Target 2:** Reduce environmental impacts in cities
+- **Target 3:** Integrate climate change measures into policies
 
 **Key Environmental Benefits:**
 - Reduces CO₂ emissions by minimizing "cruising" for parking
