@@ -98,7 +98,7 @@ const RealTimeTrafficScreen = () => {
               address: 'Nairobi, Kenya'
             });
             setMapRegion(defaultRegion);
-            setIsGettingLocation(false);
+            setIsGettingLocation(false); 
           },
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         );
